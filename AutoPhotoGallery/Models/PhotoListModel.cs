@@ -8,11 +8,12 @@ namespace AutoPhotoGallery.Models
     public class PhotoListModel
     {
         public List<string> PhotoList { get; set; }
+        public string GalleryName { get; set; }
         public string BaseDirectory { get; private set; }
 
         public PhotoListModel()
         {
-            BaseDirectory = @"~/images";
+            BaseDirectory = @"~/images/gallery";
         }
     }
 }

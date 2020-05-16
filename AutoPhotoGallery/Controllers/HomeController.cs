@@ -24,7 +24,7 @@ namespace AutoPhotoGallery.Controllers
 
         public IActionResult Index()
         {
-            return View(_photoService.GenerateList());
+            return View(_photoService.GenerateList("second"));
         }
 
         public IActionResult Privacy()

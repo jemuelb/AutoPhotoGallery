@@ -5,7 +5,12 @@
 
 <div>
     @{
-
+        foreach (string name in Model.PhotoList)
+        {
+            <div>
+                @name
+            </div>
+        }
     }
+
 </div>
- 

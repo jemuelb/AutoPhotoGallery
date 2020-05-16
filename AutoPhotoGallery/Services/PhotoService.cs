@@ -5,32 +5,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 namespace AutoPhotoGallery.Services
-{   
+{
     public class PhotoService
     {
         private readonly IWebHostEnvironment _env;
+        private readonly LinkGenerator _linkGenerator;
         private readonly PhotoListModel pl = new PhotoListModel();
-        public PhotoService(IWebHostEnvironment env)
+        private readonly string basePath = "images/gallery";
+
+        public PhotoService(IWebHostEnvironment env, LinkGenerator linkGenerator)
         {
             _env = env;
+            _linkGenerator = linkGenerator;
         }
 
-        public PhotoListModel GenerateList()
+        public PhotoListModel GenerateList(string GalleryPath)
         {
-            string ImgPath = Path.Combine(_env.WebRootPath, "images");
 
-            List<string> x = new List<string>();
+            List<string> FileNames = GenerateFileList(GalleryPath);
+
+            pl.PhotoList = x;
+            pl.GalleryName = GalleryPath;
+
+            return pl;
+        }
+        
+        private List<string> GenerateFileList(string GalleryPath)
+        {
+            string ImgPath = Path.Combine(_env.WebRootPath, basePath, GalleryPath);
+
+            List<string> fileNames = new List<string>();
 
             foreach (string filename in Directory.GetFiles(ImgPath).ToList())
             {
-                x.Add(Path.GetFileName(filename));
+                fileNames.Add(Path.GetFileName(filename));
             }
 
-            pl.PhotoList = x;
+            return fileNames;
+        }
 
-            return pl;
+        private List<string> GenerateAbsolutePaths()
+        {
+            throw new NotImplementedException();
         }
 
     }
